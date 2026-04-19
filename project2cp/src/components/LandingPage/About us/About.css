@@ -1,0 +1,124 @@
+.about{
+  display: flex;
+  padding-top: 20px; 
+  align-items: center;
+  justify-content: space-between;
+  background-color:#DBE0EB; 
+  padding-left: 60px;
+  padding-right: 60px;
+  min-height: 100vh;
+  gap:40px;
+}
+
+.about_text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 30px;
+  background-color: #DBE0EB;
+  width: 600px;
+ 
+}
+
+.about_text h1{
+  font-size: 55px;
+  font-weight: bold;
+  color: #132C41;
+  margin-bottom: 20px;
+}
+
+.about_text p{
+  font-size: 22px;
+  color: #132C41;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.about_images{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  height: 350px;
+  flex-shrink: 0;
+}
+
+.img-wrapper {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.img-wrapper.center {
+  width: 320px;
+  height: 360px;
+  z-index: 3;
+  transform: translateX(0px) scale(1);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+.img-wrapper.left {
+  width: 240px;
+  height: 300px;
+  z-index: 1;
+  transform: translateX(-260px) scale(0.88);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.img-wrapper.right {
+  width: 240px;
+  height: 300px;
+  z-index: 1;
+  transform: translateX(260px) scale(0.88);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+}
+
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(220, 227, 237, 0.5);
+  backdrop-filter: blur(2px);
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.img-wrapper.left:hover .blur-overlay,
+.img-wrapper.right:hover .blur-overlay {
+  opacity: 0.15;
+}                 
+
+
+.about_images:hover .pic1 ,.about_images:hover .pic2, .about_images:hover .pic3 {
+  filter: blur(2px);    
+  transform: scale(0.95); 
+}
+
+
+.about_btn {
+  background-color: #FFD230;
+  color: #132C41;
+  border: none;
+  padding: 12px 40px;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.about_btn:hover {
+  box-shadow: 0px 5px 15px rgba(245, 197, 24, 0.6);
+}
