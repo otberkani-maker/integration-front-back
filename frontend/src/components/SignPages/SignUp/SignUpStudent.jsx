@@ -50,10 +50,14 @@ export default function SignUpStudent() {
     setLoading(true);
     try {
       await signUpStudent({
-        email:     form.email,
-        school_id: Number(form.studentId), // maps to school_id in backend
-        grade:     `${form.level} - ${form.stream}`,
-        password:  form.password,
+        firstName: form.firstName,
+        familyName: form.familyName,
+        email: form.email,
+        studentPersonalId: form.studentId,
+        schoolName: form.stream,
+        level: form.level,
+        stream: form.stream,
+        password: form.password,
       });
 
       setSuccess(true);

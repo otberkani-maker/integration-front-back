@@ -1,11 +1,13 @@
 # Student schemas
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+
 class StudentCreate(BaseModel):
     firstName: str
     familyName: str
     email: EmailStr
-    studentId: str
+    studentPersonalId: str
+    schoolName: str
     level: str
     stream: str
     password: str
@@ -17,7 +19,10 @@ class StudentLogin(BaseModel):
 class StudentResponse(BaseModel):
     student_id: int
     email: str
+    first_name: str
+    last_name: str
     grade: Optional[str]
+    stream: Optional[str]
     attendance_rate: Optional[float]
     homework_rate: Optional[float]
 
@@ -88,3 +93,4 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     role: str
+

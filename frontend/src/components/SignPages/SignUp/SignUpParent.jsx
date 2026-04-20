@@ -20,10 +20,14 @@ import vect11 from "../../../assets/images/Vector 11 (2).png";
 export default function SignUpParent() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    firstName: "", familyName: "", email: "",
-    studentId: "", password: "", confirmPassword: "",
+    email: "",
+    studentId: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
   });
   const [error, setError]     = useState("");
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,20 +36,35 @@ export default function SignUpParent() {
     e.preventDefault();
     setError("");
 
+    // Validation
+    if (!form.email || !form.studentId || !form.password) {
+      setError("Email, Student ID, and Password are required");
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match"); return;
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
     }
 
     setLoading(true);
     try {
       await signUpParent({
-        email:      form.email,
-        student_id: Number(form.studentId),
-        password:   form.password,
+        email:        form.email,
+        student_id:   Number(form.studentId),
+        phone_number: form.phoneNumber || null,
+        password:     form.password,
       });
-      navigate("/login");
+
+      setSuccess(true);
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to create parent account");
     } finally {
       setLoading(false);
     }

@@ -18,11 +18,14 @@ class Student(Base):
 
     student_id = Column(Integer, primary_key=True, index=True)
     school_id = Column(Integer, ForeignKey('schools.school_id'), nullable=False)
+    first_name = Column(String(100), nullable=True)
+    last_name = Column(String(100), nullable=True)
     email = Column(String(100), unique=True, index=True, nullable=False)
     grade = Column(String(10), nullable=True)
-    password_hash   = Column(String(128), nullable=False)
+    stream = Column(String(50), nullable=True)
+    password_hash = Column(String(128), nullable=False)
     attendance_rate = Column(Float, nullable=True, default=0.0)
-    homework_rate   = Column(Float, nullable=True, default=0.0)
+    homework_rate = Column(Float, nullable=True, default=0.0)
 
     
 class Parent(Base):
@@ -32,15 +35,16 @@ class Parent(Base):
     student_id = Column(Integer, ForeignKey('students.student_id'), nullable=False)
     email = Column(String(100), unique=True, index=True, nullable=False)
     phone_number = Column(String(20), nullable=True)
-     password_hash   = Column(String(128), nullable=False)
+    password_hash = Column(String(128), nullable=False)
 
-class  School(Base):
+class School(Base):
     __tablename__ = 'schools'
 
     school_id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), unique=True, index=True, nullable=False)
     address = Column(String(200), nullable=False)
-    password_hash   = Column(String(128), nullable=False)
+    email = Column(String(100), unique=True, index=True, nullable=False)
+    password_hash = Column(String(128), nullable=False)
 
 class Prediction(Base):
     __tablename__ = 'predictions'

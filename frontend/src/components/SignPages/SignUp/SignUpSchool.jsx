@@ -20,9 +20,10 @@ export default function SignUpSchool() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     schoolName: "", email: "", address: "",
-    schoolId: "", password: "", confirmPassword: "",
+    password: "", confirmPassword: "",
   });
   const [error, setError]     = useState("");
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,8 +32,20 @@ export default function SignUpSchool() {
     e.preventDefault();
     setError("");
 
+    // Validation
+    if (!form.schoolName || !form.email || !form.address || !form.password) {
+      setError("All fields are required");
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match"); return;
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
     }
 
     setLoading(true);
@@ -43,9 +56,11 @@ export default function SignUpSchool() {
         email:    form.email,
         password: form.password,
       });
-      navigate("/login");
+
+      setSuccess(true);
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to create school account");
     } finally {
       setLoading(false);
     }
@@ -73,41 +88,38 @@ export default function SignUpSchool() {
           <h1 className="signup-title">Sign up</h1>
 
           {error && <p style={{ color: "red", marginBottom: "8px" }}>{error}</p>}
+          {success && <p style={{ color: "green", marginBottom: "8px" }}>Account created! Redirecting to login...</p>}
 
           <form onSubmit={handleSubmit} className="signup-form">
             <div className="form-group full-width">
               <label>School Name</label>
               <input type="text" name="schoolName" placeholder="Enter school name"
-                value={form.schoolName} onChange={handleChange} />
+                value={form.schoolName} onChange={handleChange} required />
             </div>
             <div className="form-group full-width">
               <label>E-mail</label>
               <input type="email" name="email" placeholder="example@gmail.com"
-                value={form.email} onChange={handleChange} />
+                value={form.email} onChange={handleChange} required />
             </div>
             <div className="form-group full-width">
               <label>Address</label>
               <input type="text" name="address" placeholder="Enter the address"
-                value={form.address} onChange={handleChange} />
-            </div>
-            <div className="form-group full-width">
-              <label>School ID</label>
-              <input type="text" name="schoolId" placeholder="Enter school ID"
-                value={form.schoolId} onChange={handleChange} />
+                value={form.address} onChange={handleChange} required />
             </div>
             <div className="form-group password-field">
               <label>Password</label>
               <input type="password" name="password" placeholder="xxxxxxxxxx"
-                value={form.password} onChange={handleChange} />
+                value={form.password} onChange={handleChange} required />
             </div>
             <div className="form-group password-field">
-              <label>Confirm password</label>
+              <label>Confirm Password</label>
               <input type="password" name="confirmPassword" placeholder="xxxxxxxxxx"
-                value={form.confirmPassword} onChange={handleChange} />
+                value={form.confirmPassword} onChange={handleChange} required />
             </div>
+
             <div className="submit-row">
               <button type="submit" className="signup-btn" disabled={loading}>
-                {loading ? "Signing up..." : "Sign up"}
+                {loading ? "Creating account..." : "Sign up"}
               </button>
             </div>
           </form>

@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom'
-import { isLoggedIn } from '../api/auth'
+import { isLoggedIn, getRole } from '../api/auth'
 
 export default function ProtectedRoute({ children, allowedRoles = [] }) {
   if (!isLoggedIn()) {
@@ -7,9 +7,12 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
   }
 
   // If roles are specified, check if user has the role
-  // For now, since token doesn't store role, perhaps store in localStorage
-  // But for simplicity, assume all logged in users can access
-  // Later, decode token to get role
+  if (allowedRoles.length > 0) {
+    const userRole = getRole()
+    if (!allowedRoles.includes(userRole)) {
+      return <Navigate to="/" replace />
+    }
+  }
 
   return children
 }

@@ -15,6 +15,9 @@ import SignUpParent from './components/SignPages/SignUp/SignUpParent.jsx'
 import SignUpAdmin from './components/SignPages/SignUp/SignUpAdmin.jsx'
 import Login from './components/SignPages/logIn/Login.jsx'
 import StudentSettings from './components/Student/StudentSettings'
+import ParentDashboard from './components/Parent/ParentDashboard.jsx'
+import SchoolDashboard from './components/School/SchoolDashboard.jsx'
+import AdminDashboard from './components/Admin/AdminDashboard.jsx'
 import ProtectedRoute from './components/ProtectedRoute'
 
 import './App.css'
@@ -69,8 +72,23 @@ function App() {
         <Route path="/signup/admin"   element={<SignUpAdmin />} />
         <Route path="/login"          element={<Login />} />
         <Route path="/student/settings" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['student']}>
             <StudentSettings />
+          </ProtectedRoute>
+        } />
+        <Route path="/parent/dashboard" element={
+          <ProtectedRoute allowedRoles={['parent']}>
+            <ParentDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/school/dashboard" element={
+          <ProtectedRoute allowedRoles={['school']}>
+            <SchoolDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/dashboard" element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
           </ProtectedRoute>
         } />
       </Routes>

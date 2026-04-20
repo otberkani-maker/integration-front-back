@@ -21,7 +21,7 @@ export default function Login() {
     setLoading(true);
     try {
       const data = await login(form.email, form.password);
-      saveToken(data.access_token);
+      saveToken(data.access_token, data.role);
 
       // Redirect based on role returned from backend
       switch (data.role) {
